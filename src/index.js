@@ -1,4 +1,4 @@
-import React, { StrictMode } from 'react'
+import React, { Fragment, StrictMode } from 'react'
 import ReactDOM from 'react-dom'
 import App from './App'
 import './style/normalize.css'
