@@ -45,7 +45,7 @@ module.exports = {
 
   output: {
     path: path.resolve(__dirname, '..', './build'),
-    filename: '[name].[hash].js',
+    filename: 'assets/js/[name].[hash].js',
   },
 
   plugins: [
