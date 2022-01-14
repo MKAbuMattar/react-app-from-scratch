@@ -1,8 +1,7 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const { DefinePlugin } = require('webpack')
-const dotenv = require('dotenv')
+const Dotenv = require('dotenv-webpack')
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
@@ -54,6 +53,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './public/index.html'),
     }),
+
     new CopyPlugin({
       patterns: [
         {
@@ -82,13 +82,7 @@ module.exports = {
         },
       ],
     }),
-    new DefinePlugin(
-      Object.keys(dotenv.config().parsed).reduce((prev, next) => {
-        prev[`process.env.${next}`] = JSON.stringify(
-          dotenv.config().parsed[next],
-        )
-        return prev
-      }, {}),
-    ),
+
+    new Dotenv(),
   ],
 }

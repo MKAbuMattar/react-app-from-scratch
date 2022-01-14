@@ -8,6 +8,7 @@ const App = () => {
   return (
     <Fragment>
       <Main>
+        {console.log(process.env.REACT_APP_ENV_TEST)}
         <img src={Logo} alt="React Logo" />
         <h1>Mohammad Abu Mattar</h1>
       </Main>
