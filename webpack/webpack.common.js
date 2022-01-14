@@ -1,7 +1,9 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-const DotenvFlow = require('dotenv-flow-webpack')
+const Dotenv = require('dotenv-webpack')
+
+require('dotenv').config()
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
@@ -85,6 +87,6 @@ module.exports = {
       ],
     }),
 
-    new DotenvFlow(),
+    new Dotenv(),
   ],
 }
