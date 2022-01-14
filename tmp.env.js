@@ -1,14 +1,10 @@
 const webpack = require('webpack')
-const { merge } = require('webpack-merge')
 const dotenv = require('dotenv')
 const fs = require('fs')
 const path = require('path')
-const commonConfig = require('./webpack.common.js')
 
-module.exports = (envVars, env) => {
-  const envConfig = require(`./webpack.${envVars.env}.js`)
-
-  const currentPath = path.join(__dirname, '..')
+module.exports = (env) => {
+  const currentPath = path.join(__dirname)
 
   const basePath = currentPath + '/.env'
 
@@ -23,13 +19,7 @@ module.exports = (envVars, env) => {
     return prev
   }, {})
 
-  const config = merge(
-    {
-      plugins: [new webpack.DefinePlugin(envKeys)],
-    },
-    commonConfig,
-    envConfig,
-  )
-
-  return config
+  return {
+    plugins: [new webpack.DefinePlugin(envKeys)],
+  }
 }
