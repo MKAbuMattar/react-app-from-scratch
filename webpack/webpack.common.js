@@ -6,7 +6,7 @@ module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
 
   module: {

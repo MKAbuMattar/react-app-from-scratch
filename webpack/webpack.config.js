@@ -8,24 +8,18 @@ const commonConfig = require('./webpack.common.js')
 module.exports = (envVars, env) => {
   const envConfig = require(`./webpack.${envVars.env}.js`)
 
-  const currentPath = path.join(__dirname, '..')
-
-  const basePath = currentPath + '/.env'
-
-  const envPath = basePath + '.' + env.ENVIRONMENT
-
-  const finalPath = fs.existsSync(envPath) ? envPath : basePath
-
-  const fileEnv = dotenv.config({ path: finalPath }).parsed
-
-  const envKeys = Object.keys(fileEnv).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(fileEnv[next])
-    return prev
-  }, {})
-
   const config = merge(
     {
-      plugins: [new webpack.DefinePlugin(envKeys)],
+      plugins: [
+        new webpack.DefinePlugin(
+          Object.keys(dotenv.config().parsed).reduce((prev, next) => {
+            prev[`process.env.${next}`] = JSON.stringify(
+              dotenv.config().parsed[next],
+            )
+            return prev
+          }, {}),
+        ),
+      ],
     },
     commonConfig,
     envConfig,
