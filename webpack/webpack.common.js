@@ -2,8 +2,6 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
-const { DefinePlugin } = require('webpack')
-const dotenv = require('dotenv')
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
@@ -17,12 +15,12 @@ module.exports = {
       {
         test: /\.(ts|js)x?$/,
         exclude: /node_modules/,
-        use: [
-          {
-            loader: require.resolve('babel-loader'),
-            options: {},
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
           },
-        ],
+        },
       },
       {
         test: /\.(css)$/,
@@ -88,14 +86,5 @@ module.exports = {
     }),
 
     new Dotenv(),
-
-    new DefinePlugin(
-      Object.keys(dotenv.config().parsed).reduce((prev, next) => {
-        prev[`process.env.${next}`] = JSON.stringify(
-          dotenv.config().parsed[next],
-        )
-        return prev
-      }, {}),
-    ),
   ],
 }
