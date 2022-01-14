@@ -1,12 +1,14 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const { DefinePlugin } = require('webpack')
+const dotenv = require('dotenv')
 
 module.exports = {
   entry: path.resolve(__dirname, '..', './src/index.js'),
 
   resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+    extensions: ['.js', '.jsx'],
   },
 
   module: {
@@ -80,5 +82,13 @@ module.exports = {
         },
       ],
     }),
+    new DefinePlugin(
+      Object.keys(dotenv.config().parsed).reduce((prev, next) => {
+        prev[`process.env.${next}`] = JSON.stringify(
+          dotenv.config().parsed[next],
+        )
+        return prev
+      }, {}),
+    ),
   ],
 }
