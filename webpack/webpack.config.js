@@ -3,10 +3,8 @@ const { merge } = require('webpack-merge')
 const dotenv = require('dotenv')
 const commonConfig = require('./webpack.common.js')
 
-module.exports = (environmentVars) => {
-  const { environment } = environmentVars
-
-  const environmentConfig = require(`./webpack.${environment}.js`)
+module.exports = (envVars) => {
+  const envConfig = require(`./webpack.${envVars.env}.js`)
 
   const env = dotenv.config().parsed
 
@@ -20,7 +18,7 @@ module.exports = (environmentVars) => {
       plugins: [new webpack.DefinePlugin(envKeys)],
     },
     commonConfig,
-    environmentConfig,
+    envConfig,
   )
 
   return config
