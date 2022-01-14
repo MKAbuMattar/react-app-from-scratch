@@ -49,6 +49,8 @@ module.exports = {
     filename: 'assets/js/[name].[hash].js',
   },
 
+  devtool: 'source-map',
+
   plugins: [
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, '..', './public/index.html'),
